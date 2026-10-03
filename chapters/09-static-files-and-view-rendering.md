@@ -46,14 +46,9 @@ Install Pug, an Express-compatible template engine:
 npm install pug
 ~~~
 
-Configure the views directory and engine in `src/server.js`:
+Add the view settings and route to the same `src/server.js` file. Reuse the `path` import and `currentDirectory` constant from the static assets example:
 
 ~~~js
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-
-const currentDirectory = path.dirname(fileURLToPath(import.meta.url));
-
 app.set("views", path.join(currentDirectory, "../views"));
 app.set("view engine", "pug");
 
