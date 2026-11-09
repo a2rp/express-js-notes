@@ -1405,12 +1405,17 @@ async function requireAuthenticatedUser(request, response, next) {
   const user = await users.findPublicById(userId);
 
   if (!user) {
-    request.session.destroy(() => {});
-    return response.status(401).json({
-      error: {
-        code: "SESSION_INVALID",
-        message: "Sign in to continue."
+    return request.session.destroy((error) => {
+      if (error) {
+        return next(error);
       }
+
+      response.status(401).json({
+        error: {
+          code: "SESSION_INVALID",
+          message: "Sign in to continue."
+        }
+      });
     });
   }
 
